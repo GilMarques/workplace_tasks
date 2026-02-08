@@ -1,0 +1,28 @@
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.status-badge {
+  border-radius: 16px;
+  color: white;
+  padding: 4px 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-done {
+  background-color: #77dd77;
+}
+
+.status-inprogress {
+  background-color: #1b9ecd;
+}
+
+.status-pending {
+  background-color: #d3d3d3;
+  color: #333;
+}

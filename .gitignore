@@ -1,0 +1,17 @@
+
+backend/bin/
+backend/Api/bin/
+backend/Api/obj/
+backend/Application/bin/
+backend/Application/obj/
+backend/Domain/bin/
+backend/Domain/obj/
+backend/Infrastructure/bin/
+backend/Infrastructure/obj/
+backend/obj/
+backend/.vs/
+
+
+frontend/node_modules/
+frontend/.angular/cache/
+frontend/dist/

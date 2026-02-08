@@ -1,0 +1,22 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ user().email }}</mat-card-title>
+    @if (user().role == UserRole.Admin) {
+      <span class="role-badge role-admin"> Admin </span>
+    }
+
+    @if (user().role == UserRole.Manager) {
+      <span class="role-badge role-manager"> Manager </span>
+    }
+
+    @if (user().role == UserRole.Member) {
+      <span class="role-badge role-member"> Member </span>
+    }
+  </mat-card-header>
+
+  <mat-card-actions align="end">
+    @if (canEdit()) {
+      <button mat-button (click)="onEdit.emit(user())">Edit</button>
+    }
+  </mat-card-actions>
+</mat-card>

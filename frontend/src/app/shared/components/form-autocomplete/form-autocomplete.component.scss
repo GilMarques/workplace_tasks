@@ -1,0 +1,32 @@
+.input-progress {
+  position: absolute;
+  bottom: 0;
+  left: calc(
+    -1 *
+      max(
+        16px,
+        var(
+          --mdc-outlined-text-field-container-shape,
+          var(--mat-sys-corner-extra-small)
+        )
+      )
+  );
+  right: calc(
+    -1 *
+      max(
+        16px,
+        var(
+          --mdc-outlined-text-field-container-shape,
+          var(--mat-sys-corner-extra-small)
+        )
+      )
+  );
+
+  border-radius: 0 0 4px 4px;
+  height: 4px;
+  width: auto;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  width: 100%;
+}

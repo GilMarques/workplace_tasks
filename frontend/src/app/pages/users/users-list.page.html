@@ -1,0 +1,71 @@
+<div style="display: flex; justify-content: space-between; margin-bottom: 16px">
+  <button
+    mat-fab
+    extended
+    [style.visibility]="(currentUser.role == UserRole.Admin) ? 'visible' : 'hidden'"
+    routerLink="/tasks"
+  >
+    <mat-icon>task</mat-icon>
+    Go To Tasks
+  </button>
+
+  <button mat-fab extended (click)="openUserModal(null)">
+    <mat-icon>add</mat-icon>
+    Add User
+  </button>
+</div>
+
+<div
+  style="
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 16px;
+  "
+>
+  @if (roleFilter() !== undefined) {
+  <mat-chip (click)="setFilter()">
+    @if(roleFilter() == UserRole.Admin){ Admin }@else if (roleFilter() ==
+    UserRole.Manager){ Manager }@else{ Member }
+
+    <button matChipRemove aria-label="Remove filter">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip>
+  }
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>filter_alt</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="setFilter(UserRole.Member)">Member</button>
+    <button mat-menu-item (click)="setFilter(UserRole.Manager)">Manager</button>
+    <button mat-menu-item (click)="setFilter(UserRole.Admin)">Admin</button>
+  </mat-menu>
+</div>
+
+<div
+  style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px"
+>
+  @if(!usersLoading()){ @for (user of users().items; track user.id) {
+  <user-card
+    [user]="user"
+    [canEdit]="currentUser.role == UserRole.Admin"
+    (onEdit)="openUserModal($event)"
+  ></user-card>
+  }@empty {
+  <div style="text-align: center">There are no users available</div>
+  } }@else {
+  <div style="display: flex; justify-content: center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  }
+</div>
+
+<mat-paginator
+  [length]="users().totalCount"
+  [pageSize]="users().limit"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>

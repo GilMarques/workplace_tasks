@@ -1,0 +1,29 @@
+<mat-form-field
+  appearance="outline"
+  [hideRequiredMarker]="hideRequired"
+  style="width: 100%"
+>
+  <mat-label>{{ label }}</mat-label>
+  <textarea
+    matInput
+    [type]="type()"
+    [formControl]="control"
+    (blur)="onTouched()"
+  ></textarea>
+  <ng-content select="[prefix]"></ng-content>
+  <ng-container matSuffix>
+    <ng-content select="[suffix]"></ng-content>
+  </ng-container>
+
+  <mat-error *ngIf="control.hasError('required')"
+    >{{ label }} is required.</mat-error
+  >
+
+  <mat-error *ngIf="hasError('minlength')">
+    {{ label }} must be at least
+    {{ getError("minlength").requiredLength }} characters long.
+  </mat-error>
+  <mat-error *ngIf="control.hasError('email')"
+    >{{ label }} must be a valid email.</mat-error
+  >
+</mat-form-field>

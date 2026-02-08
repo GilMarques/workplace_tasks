@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>
+  @if (data.user) {
+    Edit User
+  } @else {
+    New User
+  }
+</h2>
+<mat-dialog-content>
+  <form-input
+    style="display: block; margin-top: 16px"
+    label="Email"
+    [control]="form.controls.email"
+  >
+  </form-input>
+
+  <form-input
+    label="Password"
+    [type]="hidePassword() ? 'password' : 'text'"
+    [control]="form.controls.password"
+  >
+    <button
+      type="button"
+      suffix
+      mat-icon-button
+      (click)="togglePasswordHide($event)"
+    >
+      <mat-icon>{{
+        hidePassword() ? "visibility_off" : "visibility"
+      }}</mat-icon>
+    </button>
+  </form-input>
+
+  <form-select
+    label="Role"
+    [options]="userRoles"
+    [control]="form.controls.role"
+  ></form-select>
+</mat-dialog-content>
+
+<mat-dialog-actions
+  style="display: flex; justify-content: space-between; width: 100%"
+>
+  <div>
+    @if (data.user) {
+      <button mat-button color="warn" (click)="onDelete()">Delete</button>
+    }
+  </div>
+
+  <div>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="accent" (click)="onSubmit()">
+      {{ data.user ? "Update" : "Create" }}
+    </button>
+  </div>
+</mat-dialog-actions>

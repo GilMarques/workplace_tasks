@@ -1,0 +1,27 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ task().title }}</mat-card-title>
+    @if (task().status == TaskStatus.Done) {
+      <span class="status-badge status-done"> Done </span>
+    }
+
+    @if (task().status == TaskStatus.InProgress) {
+      <span class="status-badge status-inprogress"> In Progress </span>
+    }
+
+    @if (task().status == TaskStatus.Pending) {
+      <span class="status-badge status-pending"> Pending </span>
+    }
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+      {{ task().description }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    @if (canEdit()) {
+      <button mat-button (click)="onEdit.emit(task())">Edit</button>
+    }
+  </mat-card-actions>
+</mat-card>

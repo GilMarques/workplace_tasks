@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>
+  @if (data.task) {
+    Edit Task
+  } @else {
+    New Task
+  }
+</h2>
+<mat-dialog-content>
+  <form-input
+    style="display: block; margin-top: 16px"
+    label="Title"
+    [control]="form.controls.title"
+  >
+  </form-input>
+
+  <form-textarea label="Description" [control]="form.controls.description">
+  </form-textarea>
+
+  <form-select
+    label="Status"
+    [options]="taskStatus"
+    [control]="form.controls.status"
+  ></form-select>
+
+  @if (
+    currentUser.role == UserRole.Admin || currentUser.role == UserRole.Manager
+  ) {
+    <form-autocomplete
+      [label]="'Assign to'"
+      [control]="form.controls.user"
+      [options$]="users$"
+      [loading]="usersLoading()"
+      [displayWith]="userDisplayWith"
+      [valueWith]="userValueWith"
+      [optionTemplate]="optionTpl"
+    ></form-autocomplete>
+
+    <ng-template #optionTpl let-user>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          pointer-events: none;
+        "
+      >
+        <span>{{ user.email }}</span>
+
+        @if (user.role == UserRole.Admin) {
+          <mat-chip color="primary" selected> Admin </mat-chip>
+        }
+
+        @if (user.role == UserRole.Manager) {
+          <mat-chip color="primary" selected> Manager </mat-chip>
+        }
+
+        @if (user.role == UserRole.Member) {
+          <mat-chip color="primary" selected> Member </mat-chip>
+        }
+      </div>
+    </ng-template>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions
+  style="display: flex; justify-content: space-between; width: 100%"
+>
+  <div>
+    @if (
+      data.task &&
+      (currentUser.role == UserRole.Admin ||
+        data.task.createdByUserId == currentUser.id)
+    ) {
+      <button mat-button color="warn" (click)="onDelete()">Delete</button>
+    }
+  </div>
+
+  <div>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="accent" (click)="onSubmit()">
+      {{ data.task ? "Update" : "Create" }}
+    </button>
+  </div>
+</mat-dialog-actions>

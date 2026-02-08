@@ -1,0 +1,44 @@
+@if (loading()) {
+  <mat-form-field
+    appearance="outline"
+    [hideRequiredMarker]="hideRequired"
+    style="position: relative; width: 100%"
+  >
+    <mat-label>{{ label }}</mat-label>
+    <input matInput [disabled]="true" />
+
+    <mat-progress-bar
+      mode="indeterminate"
+      class="input-progress"
+    ></mat-progress-bar>
+  </mat-form-field>
+} @else {
+  <mat-form-field
+    appearance="outline"
+    [hideRequiredMarker]="hideRequired"
+    style="position: relative; width: 100%"
+  >
+    <mat-label>{{ label }}</mat-label>
+    <input matInput [formControl]="control" [matAutocomplete]="auto" />
+
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayWithFn.bind(this)"
+    >
+      <mat-option
+        *ngFor="let option of filteredOptions$ | async"
+        [value]="valueWith(option)"
+      >
+        <ng-container
+          *ngIf="optionTemplate; else defaultTemplate"
+          [ngTemplateOutlet]="optionTemplate"
+          [ngTemplateOutletContext]="{ $implicit: option }"
+        ></ng-container>
+
+        <ng-template #defaultTemplate>
+          {{ displayWith(option) }}
+        </ng-template>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+}

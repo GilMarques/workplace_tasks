@@ -1,0 +1,25 @@
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+.role-badge {
+  border-radius: 16px;
+  color: white;
+  padding: 4px 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+.role-admin {
+  background-color: #2a9d8f;
+}
+
+.role-manager {
+  background-color: #e76f51;
+}
+
+.role-member {
+  background-color: #f4a261;
+}

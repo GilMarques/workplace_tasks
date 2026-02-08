@@ -1,0 +1,75 @@
+<div style="display: flex; justify-content: space-between; margin-bottom: 16px">
+  <button
+    mat-fab
+    extended
+    [style.visibility]="(user.role == UserRole.Admin) ? 'visible' : 'hidden'"
+    routerLink="/users"
+  >
+    <mat-icon>person</mat-icon>
+    Go To Users
+  </button>
+
+  <button mat-fab extended (click)="openTaskModal(null)">
+    <mat-icon>add</mat-icon>
+    Add Task
+  </button>
+</div>
+
+<div
+  style="
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 16px;
+  "
+>
+  @if (statusFilter() !== undefined) {
+  <mat-chip (click)="setFilter()">
+    @if(statusFilter() == TaskStatus.Done){ Done }@else if (statusFilter() ==
+    TaskStatus.InProgress){ In Progress }@else{ Pending }
+
+    <button matChipRemove aria-label="Remove filter">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip>
+  }
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>filter_alt</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="setFilter(TaskStatus.Pending)">
+      Pending
+    </button>
+    <button mat-menu-item (click)="setFilter(TaskStatus.InProgress)">
+      In Progress
+    </button>
+    <button mat-menu-item (click)="setFilter(TaskStatus.Done)">Done</button>
+  </mat-menu>
+</div>
+
+<div
+  style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px"
+>
+  @if(!tasksLoading()){ @for (task of tasks().items; track task.id) {
+  <task-card
+    [task]="task"
+    [canEdit]="user.role == UserRole.Admin || user.role == UserRole.Manager  || task.assignedToUserId == user.id ||task.createdByUserId == user.id"
+    (onEdit)="openTaskModal($event)"
+  ></task-card>
+  }@empty{
+  <div style="text-align: center">There are no tasks available</div>
+  } }@else {
+
+  <div style="display: flex; justify-content: center">
+    <mat-spinner></mat-spinner>
+  </div>
+  }
+</div>
+
+<mat-paginator
+  [length]="tasks().totalCount"
+  [pageSize]="tasks().limit"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>

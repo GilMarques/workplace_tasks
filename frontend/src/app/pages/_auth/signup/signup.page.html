@@ -1,0 +1,47 @@
+<div class="signup-container">
+  <h1>Create Account</h1>
+  <form [formGroup]="form" (ngSubmit)="onSignup()">
+    <div>
+      <form-input label="Email" [control]="form.controls.email"> </form-input>
+    </div>
+
+    <div>
+      <form-input
+        label="Password"
+        [control]="form.controls.password"
+        [type]="hidePassword() ?  'password' : 'text'"
+      >
+        <button
+          type="button"
+          suffix
+          mat-icon-button
+          (click)="togglePasswordHide($event)"
+        >
+          <mat-icon
+            >{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon
+          >
+        </button>
+      </form-input>
+    </div>
+
+    <div style="text-align: center">
+      <button
+        mat-raised-button
+        [disabled]="loading()"
+        type="submit"
+        style="display: block; width: 100%; margin-bottom: 8px"
+      >
+        @if(loading()){
+        <mat-spinner style="display: inline-block" diameter="20"></mat-spinner>
+        }@else{ Register }
+      </button>
+
+      <span>Already have an account? </span
+      ><a
+        style="text-decoration: underline; cursor: pointer"
+        routerLink="/login"
+        >Login</a
+      >
+    </div>
+  </form>
+</div>

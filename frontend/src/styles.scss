@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme();
+
+html {
+  @include mat.all-component-themes($theme);
+  @include mat.color-variants-backwards-compatibility($theme);
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
